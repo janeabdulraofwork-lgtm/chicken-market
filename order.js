@@ -74,7 +74,7 @@ const message =
   window.open(waUrl, "_blank");
 
   // 2️⃣ Google Form auto-submit
-  const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSf_9RaSeapHj5Z9X2Qe8_eqhVQ82maYybXdkwWzn1SKAYpfnw/formResponse";
+  const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSf_9RaSeapHj5Z9X2Qe8_eqhVQ82maYybXdkwWzn1SKAYpfnw/viewform?usp=pp_url&entry.1939324443=h&entry.1308740507=1&entry.220789197=3&entry.167630465=5";
 
   // Map your Google Form entry IDs to values
   const formData = new FormData();
@@ -93,5 +93,6 @@ const message =
   // Optional confirmation alert
   alert("✅ Your order has been sent to WhatsApp and saved in the sheet!");
 };
+
 
 
