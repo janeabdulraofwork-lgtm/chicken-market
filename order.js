@@ -57,12 +57,18 @@ document.getElementById("orderBtn").onclick = () => {
   const totalWeight = (chicken * weight).toFixed(2);
 
   // 1️⃣ WhatsApp message
-  const message =
-    "Hello " + shopName +
-    "%0A%0A🛒 داخازی:%0" +
-    "🐔 Chickens: " + ژمارا مريشکا  +
-    "%0A⚖ Weight per chicken: " + وزنا هەر مريشکەکێ + " kg" +
-    "%0A📦 Total weight: " + کوى گشتى + " kg";
+const message =
+    "Hello " +
+    shopName +
+    "%0A%0A🛒 داخازی:%0A" +   // <-- fixed here
+    "🐔 مرێشک: " +
+    chicken +
+    "%0A⚖ وزنا هەر مريشکەکێ: " +
+    weight +
+    " kg" +
+    "%0A📦 کۆی گشتی: " +
+    totalWeight +
+    " kg";
 
   const waUrl = "https://wa.me/" + shopPhone + "?text=" + message;
   window.open(waUrl, "_blank");
@@ -87,4 +93,5 @@ document.getElementById("orderBtn").onclick = () => {
   // Optional confirmation alert
   alert("✅ Your order has been sent to WhatsApp and saved in the sheet!");
 };
+
 
