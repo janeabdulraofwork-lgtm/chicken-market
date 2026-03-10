@@ -51,12 +51,12 @@ document.getElementById("minusWeight").onclick = () => {
 };
 
 // -----------------------------
-// Place order button (WhatsApp + Google Sheets)
+// Place order button (WhatsApp + auto Google Form submit)
 // -----------------------------
 document.getElementById("orderBtn").onclick = () => {
   const totalWeight = (chicken * weight).toFixed(2);
 
-  // 1️⃣ Send to WhatsApp
+  // 1️⃣ WhatsApp message
   const message =
     "Hello " + shopName +
     "%0A%0A🛒 Order:%0A" +
@@ -67,31 +67,23 @@ document.getElementById("orderBtn").onclick = () => {
   const waUrl = "https://wa.me/" + shopPhone + "?text=" + message;
   window.open(waUrl, "_blank");
 
-  // 2️⃣ Send to Google Sheets
-  const data = {
-    shop: shopName,
-    chicken: chicken,
-    weight: weight,
-    totalWeight: totalWeight
-  };
+  // 2️⃣ Google Form auto-submit
+  const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSf_9RaSeapHj5Z9X2Qe8_eqhVQ82maYybXdkwWzn1SKAYpfnw/formResponse";
 
-  // Use your Apps Script Web App URL here
-  fetch("https://script.google.com/macros/s/AKfycbxjazR1C79DyIGhKUBlhtfv1Y9ppvn8VGC3n2Iym2kJTR3ehntA2pK57rR2gtyuXY_u-A/exec", {
+  // Map your Google Form entry IDs to values
+  const formData = new FormData();
+  formData.append("entry.1939324443", shopName);
+  formData.append("entry.1308740507", chicken);
+  formData.append("entry.220789197", weight);
+  formData.append("entry.167630465", totalWeight);
+
+  // Send form without user interaction
+  fetch(formUrl, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  })
-  .then(res => {
-    if (!res.ok) throw new Error("Network response not OK: " + res.status);
-    return res.json();
-  })
-  .then(res => {
-    console.log("Order saved to Google Sheet:", res);
-  })
-  .catch(err => {
-    console.error("Failed to save order to Google Sheet:", err);
+    mode: "no-cors",
+    body: formData
   });
 
-  // Optional alert
-  alert("✅ Your order has been sent to WhatsApp and saved!");
+  // Optional confirmation alert
+  alert("✅ Your order has been sent to WhatsApp and saved in the sheet!");
 };
