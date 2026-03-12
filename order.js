@@ -51,48 +51,44 @@ document.getElementById("minusWeight").onclick = () => {
 };
 
 // -----------------------------
-// Place order button (WhatsApp + auto Google Form submit)
+// Place order button (WhatsApp + SheetDB)
 // -----------------------------
 document.getElementById("orderBtn").onclick = () => {
   const totalWeight = (chicken * weight).toFixed(2);
 
-  // 1️⃣ WhatsApp message
-const message =
-    "Hello " +
-    shopName +
-    "%0A%0A🛒 داخازی:%0A" +   // <-- fixed here
-    "🐔 مرێشک: " +
-    chicken +
-    "%0A⚖ وزنا هەر مريشکەکێ: " +
-    weight +
-    " kg" +
-    "%0A📦 کۆی گشتی: " +
-    totalWeight +
-    " kg";
+  // 1️⃣ Send to WhatsApp
+  const message =
+    "Hello " + shopName +
+    "%0A%0A🛒 داخازی:%0A" +
+    "🐔 مرێشک: " + chicken +
+    "%0A⚖ وزنا هەر مريشکەکێ: " + weight + " kg" +
+    "%0A📦 کۆی گشتی: " + totalWeight + " kg";
 
   const waUrl = "https://wa.me/" + shopPhone + "?text=" + message;
   window.open(waUrl, "_blank");
 
-  // 2️⃣ Google Form auto-submit
-fetch("https://script.google.com/macros/s/AKfycbzjkYumVhsDiaMq7BMHCVYJj9hh1YC0_E0G1xSiYvTA4F-mt-1_GgRu9Cxs0iiz0nWC6w/exec", {
-  method: "POST",
-  mode: "no-cors",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    shop: shopName,
-    chicken: chicken,
-    weight: weight,
-    totalWeight: totalWeight
+  // 2️⃣ Send to SheetDB
+  const sheetDBUrl = "https://sheetdb.io/api/v1/kchxrmch1m18c";
+
+  fetch(sheetDBUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      data: {
+        Time: new Date().toLocaleString(),
+        Shop: shopName,
+        Chickens: chicken,
+        "Weight per Chicken": weight,
+        "Total Weight": totalWeight
+      }
+    })
   })
-});
-  // Optional confirmation alert
-  alert("✅ Your order has been sent to WhatsApp and saved in the sheet!");
+    .then(response => {
+      if (!response.ok) throw new Error("SheetDB error: " + response.status);
+      alert("✅ Your order has been sent to WhatsApp and saved!");
+    })
+    .catch(err => {
+      console.error(err);
+      alert("⚠ Failed to save order to SheetDB");
+    });
 };
-
-
-
-
-
-
