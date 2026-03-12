@@ -76,6 +76,7 @@ const message =
   // 2️⃣ Google Form auto-submit
 fetch("https://script.google.com/macros/s/AKfycbzjkYumVhsDiaMq7BMHCVYJj9hh1YC0_E0G1xSiYvTA4F-mt-1_GgRu9Cxs0iiz0nWC6w/exec", {
   method: "POST",
+  mode: "no-cors",
   headers: {
     "Content-Type": "application/json"
   },
@@ -86,10 +87,10 @@ fetch("https://script.google.com/macros/s/AKfycbzjkYumVhsDiaMq7BMHCVYJj9hh1YC0_E
     totalWeight: totalWeight
   })
 });
-
   // Optional confirmation alert
   alert("✅ Your order has been sent to WhatsApp and saved in the sheet!");
 };
+
 
 
 
