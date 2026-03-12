@@ -74,25 +74,23 @@ const message =
   window.open(waUrl, "_blank");
 
   // 2️⃣ Google Form auto-submit
-  const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSf_9RaSeapHj5Z9X2Qe8_eqhVQ82maYybXdkwWzn1SKAYpfnw/formResponse";
-
-  // Map your Google Form entry IDs to values
-  const formData = new FormData();
-  formData.append("entry.1939324443", shopName);
-  formData.append("entry.1308740507", chicken);
-  formData.append("entry.220789197", weight);
-  formData.append("entry.167630465", totalWeight);
-
-  // Send form without user interaction
-  fetch(formUrl, {
-    method: "POST",
-    mode: "no-cors",
-    body: formData
-  });
+fetch("https://script.google.com/macros/s/AKfycbzjkYumVhsDiaMq7BMHCVYJj9hh1YC0_E0G1xSiYvTA4F-mt-1_GgRu9Cxs0iiz0nWC6w/exec", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    shop: shopName,
+    chicken: chicken,
+    weight: weight,
+    totalWeight: totalWeight
+  })
+});
 
   // Optional confirmation alert
   alert("✅ Your order has been sent to WhatsApp and saved in the sheet!");
 };
+
 
 
 
